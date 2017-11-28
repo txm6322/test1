@@ -89,34 +89,64 @@ xrange
 
 #define
 #include
-(BDFL)
-(BOM)
-(Benevolent
-(CWD)
-(DFLR)
-(FIFO) first-in-first-out
-(LIFO) last-in-first-out
-(GUI)
-Graphical
+Benevolent Dictator for Life (BDFL) - Guido van Rossum is anointed
+Graphical User Interface(GUI)
+curly braces {}
+square brackets []
+byte order marker (BOM)
+diamond inheritance tree
+duck typing
+strong typing
+dynamic typing
+if/else ternary expression
+   x if y else z (x is evaluated only if y is true)
+JIT(just-in-time) compiler
+
+DOM parsing
+depth-first, left-to-right(DFLR)
+(FIFO) first-in-first-out (LIFO) last-in-first-out
+Python Environment Variables:
+  PATH(or path)  System shell search path(for finding "python")
+  PYTHONPATH     Python module search path(for imports)
+  PYTHONSTARTUP  path to python interactive startup file
+  PY_PYTHON PY_PYTHON2 PY_PYTHON3  Windows launcher defaults
+  TCL_LIBRARY/TK_LIBRARY  GUI extension variables(tkinter)
+__init__.py  new namespace pkg model changed in 3.3, where new-style pkg may
+PythonWin IDE
+
+ArithmeticError
+AssertionError
+AttributeError
+EOFError
+FloatingPointError
+IndexError
+LookupError
+NotImplementedError
+OSError
+OverflowError
+TypeError
+ZeroDivisionError
+BaseException
+Exception
+Python Software Foundation(PSF)
+Python Enhancement Proposal(PEP)
+queues  best-first searches, FIFO
+proxy class(wrappers)
+chaining exceptions
+KISS principle
+new-style class
+object-oriented programming(OOP)
+
 IDEs
-JIT
-(Lutz)
 (ORMs)
-PEP
-(PSF)
 (PVM)
 (RIAs)
 (backslash)
 (bool
 (byte
-(curly
 (decimal
-(depth-first
 (equivalence)
-(file
-(int
 (integrated
-(just-in-time)
 (left-shift)
 **args
 **kargs
@@ -128,90 +158,51 @@ API
 ASCII
 Android
 Appendix
-ArithmeticError
-AssertionError
-AttributeError
 BDFL
 BOM
-BaseException
-Benevolent
 Boolean
-C++
 CPython
 CSV
 CWD
 Cygwin
 Cython
-D: Solutions
-DFLR
-DOM
-Dictator
 EBCDIC
 EIBTI
-EOFError
 Eclipse
 Editor
 ElementTree
 End-of-Part
-Enhancement
-Exception
-FIFO
 FieldStorage
-FloatingPointError
-Foundation
-GUI
-Graphical
-Guido
 HTML
 IDE
 IDLE
 Index
-IndexError
-Interface
 Internet
 IronPython
-JIT
 JSON
 Jython
-KISS
 KeyboardInterrupt
 Komodo
 LEGB
 Latin-1
-Life
-Linux
-LookupError
 MRO
-Mac
 Machine
 Matlab
 MongoDB
 NetBeans
 None
 NotImplemented
-NotImplementedError
 NumPy
-OOP
 ORMs
 OS
-OSError
 OrderedDict
-OverflowError
-PATH
 PEP
 PMW
 PSF
 PVM
 PYTHONIOENCODING
-PYTHONPATH
-PYTHONSTARTUP
-PY_PYTHON
-PY_PYTHON2
-PY_PYTHON3
 Parrot
-Perl
 Peters
-Proposal
 Psyco
 PyChecker
 PyDev
@@ -225,11 +216,8 @@ PySolFC
 PyUnit
 Pyrolog
 PythonLauncher
-PythonWin
-Q&A
 RIAs
 Registry
-Rossum
 SAX
 SQL
 SciPy
@@ -237,31 +225,22 @@ ScientificPython
 Send
 Shed
 Skin
-Software
 Sphinx
 Stackless
 StopIteration
 Swallow
 Symbols
 SystemExit
-TCL_LIBRARY
-TK_LIBRARY
 Tim
-TypeError
-UTF-16
-UTF-8
-Unicode
-Unix
+Unicode UTF-8 UTF-16
 Unix-style
 Unladen
-User
 Virtual
 Windows
 Wing
 Winpdb
 XML
 ZODB
-ZeroDivisionError
 _
 __
 __all__
@@ -278,8 +257,7 @@ __format__
 __future__
 __getslice__
 __hex__
-__init__.py
-__len__
+span multi dirs and require no __init__.py
 __main__
 __mod__
 __mro__
@@ -315,7 +293,6 @@ alternative
 and
 annotations
 anonymous functions
-answers
 append
 applications
 arbitrary
@@ -348,7 +325,6 @@ backtracking
 base
 based
 basic
-behavior
 benchmark
 benchmarking
 best-first
@@ -364,14 +340,11 @@ blunders
 bound
 boundary
 bounds
-braces
-brackets
 branching
 break
 breaking
 bsddb
 building
-built-ins
 builtins
 by
 byte
@@ -391,11 +364,9 @@ categories
 certificate
 cgi.FieldStorage
 chained
-chaining
 change
 changes
 changing
-chapter
 character
 characters
 checking
@@ -404,10 +375,7 @@ circular
 clashes
 class
 class-based
-classes
-classes;
 clause
-clauses
 clear
 clicking
 clicks
@@ -416,17 +384,13 @@ clock
 close
 closing
 closures
-code
 codecs
-codes
-coding
 cohesion
 collection
 collections
 collisions
 colon
 colors
-combining
 comma
 command
 command-line
@@ -441,7 +405,6 @@ comparison
 comparisons
 compilation
 compiled
-compiler
 completion
 component
 composition
@@ -455,16 +418,12 @@ conditions
 configuring
 conflict
 connections
-considerations
 constants
 constraints
-construction
 constructor
-constructors
 content
 context
 contextlib
-contexts
 continuation
 continue
 control
@@ -487,13 +446,10 @@ coupling
 creating
 cross-file
 csv
-curly
 currency
-current
 custom
 customer
 customization
-customizing
 cx_freeze
 cycle
 cycles
@@ -525,7 +481,6 @@ delimiters
 delimiting
 deprecation
 depth
-depth-first
 derived
 descriptor
 descriptors
@@ -534,16 +489,12 @@ designators
 destruction
 destructor
 details
-development
-diamond
 dictionary
 dictionary comprehension
 difference
 directions
 directive
 directives
-directory
-diretory
 display
 displaying
 displays
@@ -556,8 +507,6 @@ documentation
 dot
 double
 dual
-duck
-dynamic
 editor
 eggs
 elif/else
@@ -587,12 +536,8 @@ escape
 etree
 event
 everything
-example
-examples
 exc_info
 excepthook
-exception
-exceptions
 executable
 executing
 execution
@@ -602,7 +547,6 @@ experimenting
 explicit
 exploring
 exponentiation
-expression
 extend
 extended
 extending
@@ -616,7 +560,6 @@ features
 fetches
 file
 filenames
-files
 filesystems
 filtering
 find
@@ -679,10 +622,7 @@ hierarchies
 hierarchy
 homegrown
 iOS
-icon
-icons
 if
-if/else
 immutable
 imp.reload
 impacts
@@ -715,7 +655,6 @@ inline
 inputs
 insert
 inspecting
-installing
 instance
 instances
 integer
@@ -746,7 +685,6 @@ iterators
 join
 json
 jump
-just-in-time
 keys
 keyword
 lambda
@@ -755,7 +693,6 @@ launch
 launcher
 launching
 left-shift
-left-to-right
 legacy
 lengths
 lexical
@@ -780,7 +717,6 @@ lookup
 loop
 looping
 loops
-lower
 macros
 make
 making
@@ -793,24 +729,16 @@ manual
 mapattrs
 mappers
 mapping
-marker
 marks
 markup
 match
-matching
 math
-mathematical
 matrix
-matrixes
 membership
 memory
 metaclass
-metaclasses
 metafunctions
-metaprogram
-metaprograms
 method
-methods
 microthreads
 minimizing
 mismatches
@@ -850,7 +778,6 @@ nested
 nesting
 neutralizing
 new
-new-style
 non-ASCII
 nonexhaustive
 nonlocal
@@ -861,12 +788,8 @@ notification
 number-specific
 numbers
 numeric
-object
-object-oriented
-objects
 occurrence
 octal
-of
 on
 one-shot
 one-time
@@ -879,7 +802,6 @@ optimizing
 options
 optparse
 or
-order
 ordering
 os
 other
@@ -894,20 +816,16 @@ paradox
 parallel
 parameters
 parentheses
-parsing
 part
 pass
 passing-arguments-by-pointer
 passing-arguments-by-value
-path
-paths
 pattern
 patterns
 pdb
 per
 percent
 perf_counter
-performance
 permutations
 persistence
 perspective
@@ -936,7 +854,6 @@ precedence
 precision
 prefix
 preset
-principle
 prints
 privacy
 private
@@ -953,7 +870,6 @@ propagating
 properties
 protocol
 prototyping
-proxy
 pseudoprivate
 pstats
 public
@@ -965,9 +881,7 @@ pystone.py
 qualification
 questions
 queue
-queues
 quit
-quiz
 quotation
 quotes
 r
@@ -1084,7 +998,6 @@ specializing
 specific
 speed
 split
-square
 stack
 stacks
 standard
@@ -1092,10 +1005,7 @@ startup
 state
 statement
 static
-stderr
 stderr/stdin/stdout
-stdin
-stdout
 steps
 storing
 stream
@@ -1103,16 +1013,11 @@ strengths
 strides
 string
 string-based
-strong
 struct
 subclass
 subclassing
 subdirectory
 subprocess
-substitution
-suggestions
-summarized
-summary
 summation
 superclass
 support
@@ -1120,14 +1025,12 @@ symbol
 symbols
 syntax
 sys
-system
 systeminfo
 systems
 tables
 tabs
 terminating
 termination
-ternary
 test
 text
 this
@@ -1143,7 +1046,6 @@ tool
 toolkit
 tools
 traceback
-tracebacks
 traces
 tracing
 tradeoffs
@@ -1163,23 +1065,17 @@ tuple-based
 tuple-unpacking
 tutorial
 type-specific
-typing
 unbound
 underscore
 unicode
-units
 unittest
 unpacking
 update
-upper
 usability
-user
 using
 utility
 validating
 value
-values
-van
 varargs
 variable
 variants
@@ -1205,10 +1101,6 @@ whitespace
 win32all
 with
 with/as
-words
-working
-wrapper
-wrappers
 write
 writelines
 wxPython
