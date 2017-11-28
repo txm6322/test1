@@ -1,3 +1,30 @@
+operator overloading method
+__new__   Creation       Obj creation, before __init--
+__init__  Constructor
+__del__   Destructor
+__add__   Operator +     x + y, x += y if no __iadd__
+__or__    Operator | (bitwise OR)  x|y, x |= y if no __ior__
+__repr__,__str__  Printing,conversion   print(x)  repr(x), str(x)
+__call    Function calls    X(*args, **kargs)
+__getattr__  Attribute fetch    X.undefined
+__setattr__  Attribute assign   X.any = v
+__delattr__  Attribute deletion del X.any
+__getattribute__  Attribute fetch    X.any
+__getitem__  Indexing,slicing,iteration    x[k],x[i:j] if no __iter__
+__setitem__  Index and slice assign     x[k]=v, x[i:j]=iterable
+__delitem__  Index and slice deletion    del x[k], del x[i:j]
+__len__      length                     len(x), truth tests if no __bool__
+__bool__     boolean tests              bool(x), truth tests(__nonzero__ in 2.x)
+__eq__ __ne__ __le__ __lt__ __ge__ __gt__
+             Comparison                x<, <=, ==, !=, >=, >(or else __cmp__ in 2.X only)
+__radd__     Right-side op             Other + x
+__iadd__     In-place augmened op      X += y (or else __add__)
+__iter__,__next__   Iteration contexts   i = iter(x), next(i); for loops, if no __contains__, all comprehensions, map(f,x), other(__next__ is named next in 2.x)
+__contains__   Membership test         a in x(any iterable)
+__index__    Integer value             hex(x), bin(x),oct(x), O[x], o[x:] (replace 2.x __oct__, __hex__)
+__enter__, __exit__  Context manager   with obj as var:
+__get__,__set__,__delete__    Descriptor attr     X.attr, X.attr=v, del X.attr
+
 built-in function:
 abs
 all
@@ -70,12 +97,12 @@ xrange
 (FIFO) first-in-first-out
 (LIFO) last-in-first-out
 (GUI)
-(Graphical
-(IDEs)
-(JIT)
+Graphical
+IDEs
+JIT
 (Lutz)
 (ORMs)
-(PEP)
+PEP
 (PSF)
 (PVM)
 (RIAs)
@@ -109,7 +136,6 @@ BOM
 BaseException
 Benevolent
 Boolean
-Booleans
 C++
 CPython
 CSV
@@ -238,58 +264,30 @@ ZODB
 ZeroDivisionError
 _
 __
-__add__
 __all__
 __annotations__
 __bases__
-__bool__
 __builtin__
-__call__
 __class__
 __cmp__
-__contains__
 __context__
 __debug__
-__del__
-__delattr__
-__delete__
-__delitem__
 __dict__
-__enter__
-__exit__
 __file__
 __format__
 __future__
-__eq__ __ne__ __le__ __lt__ __ge__ __gt__
-__get__
-__getattr__
-__getattribute__
-__getitem__
 __getslice__
 __hex__
-__iadd__
-__index__
-__init__
 __init__.py
-__iter__
 __len__
 __main__
 __mod__
 __mro__
 __name__
-__new__
-__next__
 __oct__
-__or__
 __pycache__
-__radd__
-__repr__
 __rmod__
-__set__
-__setattr__
-__setitem__
 __setslice__
-__str__
 __sub__
 _exit
 _thread
