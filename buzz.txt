@@ -24,13 +24,9 @@ __contains__   Membership test         a in x(any iterable)
 __index__    Integer value             hex(x), bin(x),oct(x), O[x], o[x:] (replace 2.x __oct__, __hex__)
 __enter__, __exit__  Context manager   with obj as var:
 __get__,__set__,__delete__    Descriptor attr     X.attr, X.attr=v, del X.attr
-enumerate
 
 built-in function:
 abs
-all
-apply
-any
 ascii
 bin
 bytes
@@ -40,27 +36,20 @@ compile
 complex
 super
 dict
-zip
 dir
 help
 eval
 exec
 execfile
-float
-range
 format
 built-in functions for functional programming
 frozenset
+hex
 id
 __import__
 input
 isinstance
 iter
-int
-len
-map/reduce/filter
-stderr/stdin/stdout
-min/max
 next
 hex/oct
 open
@@ -77,11 +66,9 @@ set
 getattr/setattr
 sorted
 staticmethod
-str
 sum
 tuple
 type
-xrange
 
 #define
 #include
@@ -108,7 +95,6 @@ Python Environment Variables:
   PY_PYTHON PY_PYTHON2 PY_PYTHON3  Windows launcher defaults
   TCL_LIBRARY/TK_LIBRARY  GUI extension variables(tkinter)
 __init__.py  new namespace pkg model changed in 3.3, where new-style pkg may
-PythonWin IDE
 
 ArithmeticError
 AssertionError
@@ -132,6 +118,16 @@ chaining exceptions
 KISS principle
 new-style class
 object-oriented programming(OOP)
+
+most useful built-in functions:
+open for file
+str/int/float
+len
+enumerate
+min/max/all/any
+range/xrange  list(range(0,6,2)) [0, 2, 4]
+getattr/setattr/hasattr
+apply/zip/filter/map/reduce
 
 IDEs
 (ORMs)
@@ -157,35 +153,44 @@ Appendix
 BDFL
 BOM
 Boolean
-CPython
 CSV
 CWD
 Cygwin
-Cython
+
+  CPython: The standard
+  Cython: Python/C hybrid
+  Shed Skin:Python-to-C++ translator
+  IronPython: Python for .NET
+  Jython: Python for Java
+  PyPy: Python for speed
+  Stackless: Python for concurrency
+  Psyco: The original just-in-time compiler
+IDE:
+  Eclipse with PyDev plugin
+  Komodo
+  NetBeans
+  PythonWin IDE
+  Wing
+  IDLE
+
+wxPython
 EBCDIC
 EIBTI
-Eclipse
 Editor
 ElementTree
 End-of-Part
 FieldStorage
 HTML
-IDE
-IDLE
 Index
 Internet
-IronPython
 JSON
-Jython
 KeyboardInterrupt
-Komodo
 LEGB
 Latin-1
 MRO
 Machine
 Matlab
 MongoDB
-NetBeans
 None
 NotImplemented
 NumPy
@@ -199,14 +204,11 @@ PVM
 PYTHONIOENCODING
 Parrot
 Peters
-Psyco
 PyChecker
-PyDev
 PyDoc
 PyInstaller
 PyLint
 PyMongo
-PyPy
 PySerial
 PySolFC
 PyUnit
@@ -219,10 +221,7 @@ SQL
 SciPy
 ScientificPython
 Send
-Shed
-Skin
 Sphinx
-Stackless
 StopIteration
 Swallow
 Symbols
@@ -233,7 +232,6 @@ Unix-style
 Unladen
 Virtual
 Windows
-Wing
 Winpdb
 XML
 ZODB
@@ -282,9 +280,6 @@ additional
 address
 advanced
 algorithm
-all
-also
-alternate
 alternative
 and
 annotations
@@ -557,7 +552,6 @@ fetches
 file
 filenames
 filesystems
-filtering
 find
 findall
 first-class
@@ -595,13 +589,11 @@ generation
 generator
 generators
 generic
-generically
 get
 getcontext
 getopt
 getrecursionlimit
 global
-globally
 go
 gotchas
 grouping
@@ -653,13 +645,9 @@ insert
 inspecting
 instance
 instances
-integer
 integer-based
-integers
 integrated
-integration
 interactive
-interactively
 intercepting
 interception
 interchangeable
@@ -700,8 +688,6 @@ lines
 list
 list comprehension
 list-unpacking
-listed
-listing
 literals
 little
 little-endian
@@ -880,7 +866,6 @@ queue
 quit
 quotation
 quotes
-r
 raise
 raising
 random
@@ -891,8 +876,7 @@ re
 reStructuredText
 read
 read-only
-readline
-readlines
+readline readlines writelines xreadlines
 realistic
 recording
 recursion
@@ -911,17 +895,14 @@ repeat
 repeating
 repetition
 replace
-reports
 representation
 reserved
-resetting
 resolution
 resources
 results
 retaining
 retention
 return
-returning
 reuse
 reverse
 rich
@@ -930,8 +911,6 @@ roots
 routing
 rstrip
 rule
-rules
-running
 runtime
 scans
 schemes
@@ -945,7 +924,6 @@ script
 scripting
 scripts
 search
-searches
 seek
 selecting
 selection
@@ -964,14 +942,11 @@ setdefault
 setrecursionlimit
 sets
 setting
-settings
 setup
 shadowing
 shared
 shell
 shelve
-shelves
-showing
 shufflers
 sign
 signaling
@@ -988,17 +963,16 @@ sorts
 source
 sources
 spaces
-special
-special-case
 specializing
-specific
 speed
 split
 stack
-stacks
+standard
+startup
 state
 statement
 static
+stderr/stdin/stdout
 steps
 storing
 stream
@@ -1008,8 +982,6 @@ string
 string-based
 struct
 subclass
-subclassing
-subdirectory
 subprocess
 summation
 superclass
@@ -1083,7 +1055,6 @@ virtual
 walk
 walkers
 warnings
-ways
 weak
 weakref
 while
@@ -1091,7 +1062,4 @@ win32all
 with
 with/as
 write
-writelines
-wxPython
-xreadlines
 yield
