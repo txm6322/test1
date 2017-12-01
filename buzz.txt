@@ -24,6 +24,7 @@ __contains__   Membership test         a in x(any iterable)
 __index__    Integer value             hex(x), bin(x),oct(x), O[x], o[x:] (replace 2.x __oct__, __hex__)
 __enter__, __exit__  Context manager   with obj as var:
 __get__,__set__,__delete__    Descriptor attr     X.attr, X.attr=v, del X.attr
+enumerate
 
 built-in function:
 abs
@@ -42,18 +43,14 @@ dict
 zip
 dir
 help
-enumerate
 eval
 exec
 execfile
-filter
 float
 range
 format
 built-in functions for functional programming
 frozenset
-getattr
-hex
 id
 __import__
 input
@@ -61,24 +58,23 @@ isinstance
 iter
 int
 len
-map
-min
-max
+map/reduce/filter
+stderr/stdin/stdout
+min/max
 next
-oct
+hex/oct
 open
 ord
 print
 pow
 property
-reduce
 repr
 raw_input
 reload
 reversed
 round
 set
-setattr
+getattr/setattr
 sorted
 staticmethod
 str
@@ -1000,12 +996,9 @@ speed
 split
 stack
 stacks
-standard
-startup
 state
 statement
 static
-stderr/stdin/stdout
 steps
 storing
 stream
@@ -1082,11 +1075,9 @@ variants
 variations
 version
 version-neutral
-versions
 view
 viewitems
 viewkeys
-views
 viewvalues
 virtual
 walk
@@ -1095,9 +1086,7 @@ warnings
 ways
 weak
 weakref
-websites
 while
-whitespace
 win32all
 with
 with/as
