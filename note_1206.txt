@@ -1,0 +1,43 @@
+1206:
+>pip install pycryptodomex
+
+
+built-in types:
+  numeric
+    int(Boolean is a subtype of int)
+       unlimited precision
+    float
+       usually implemented using double in C
+       sys.float_info(max=1.7976931348623157e+308,
+                      max_exp=1024,
+                      max_10_exp=308,
+                      min=2.2250738585072014e-308,
+                      min_exp=-1021,
+                      min_10_exp=-307,
+                      dig=15, mant_dig=53, epsilon=2.220446049250313e-16,
+                      radix=2, rounds=1)
+    complex: z.real + z.imag, both float
+    fractions(in standard library)
+        rationals
+    decimal(in standard library)
+        floating with user-definable precision
+  sequence
+  mapping
+  class
+  instance
+  exception
+False:
+  None
+  False
+  zero of any numeric type: 0, 0.0, 0j
+  empty sequence:  '', (), []
+  empty mapping:  {}
+  user-defined instance, if __bool__() or __len__(), when returns zero or False
+
+                 int        float         complex     str
+int                        float(5)                  str(12)=='12'
+               5/2=2(P2)   5/2 = 2.5(P3)
+float           int(1.2)                             str(1.1) == '1.1'
+complex
+
+string          int('12')  float('1.2')
