@@ -1,3 +1,40 @@
+1207:
+s = '深入Python'
+s.encode('utf-8')
+b'\xe6\xb7\xb1\xe5\x85\xa5Python'
+
+s.encode('gb18030')
+b'\xc9\xee\xc8\xebPython'
+
+s.encode('big5')
+b'\xb2`\xa4JPython'
+
+len(s) == 8
+s[0] == '深'
+s + ' 3' = '深入Python 3'
+splitlines(), split('f'), lower(), count('f')
+'=' in s
+
+string: immutable seq of unicode chars
+bytes:  immutable seq of numbers [0-255]
+  bx = b'ab\x65'  # 'abe'  type = <class 'bytes'>, len =5
+  bx += b'\xff'
+  bx[0] # 97
+  barr = bytearray(bx)   # bytearray(b'abe'), len=5
+  barr[0] = 102  # mutable
+
+                 bytes          str            bytearray
+   int           bytes([10,20])
+   bytes                      b'ab'.decode()   bytearray(b'ab')
+                                              
+   str           'ab'.encode()                 bytearray('ab', 'utf8')
+                 bytes('ab','utf8')
+                 bytes.fromhex('10')
+
+   bytearray     bytes(array)  array.decode()
+bytes(source,encoding, errors)
+bytearray(source,encoding, errors)
+
 1206:
 >pip install pycryptodomex
 
@@ -40,4 +77,32 @@ int                        float(5)                  str(12)=='12'
 float           int(1.2)                             str(1.1) == '1.1'
 complex
 
-string          int('12')  float('1.2')
+string          int('12')  float('1.2')              str(1+0j)=='(1+0j)'
+
+
+
+
+            bin     oct       int                   hex
+bin                       int('101',2)==5
+oct       bin(int('11',8))    int('11',8)==9        hex(int('11',8))
+                              i = 0o11
+
+                                                   
+int     '{0:b}'.format(37) == '100101'
+        format(10,'08b') == '00001010'  'o' for oct  'x' for hex  256-->'100'
+        bin(10) == '0b1010'             oct(10) == '0o12'   hex(10) == '0xa'
+
+hex                       int('12',16)
+                          i = 0x11
+from __future__ import division
+true Division
+1/2 == 0.5
+1.0/2.0 == 0.5
+floor Division
+1.0//2.0 == 0.0   float
+-1/2 == -1  move left on num line
+
+1. use language or built-in libs
+2. 3rd party libs with suitable license
+3. your own collection
+4. write new(and save in your own collection for later)
