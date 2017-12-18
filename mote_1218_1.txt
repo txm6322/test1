@@ -1,0 +1,19 @@
+
+    @staticmethod
+    def get_crc(f, size=65536):
+        """ return zlib.crc32 in upper case hex decimal without 0x"""
+        with open(f, 'rb') as f:
+            crc = crc32(b'')
+            while True:
+                data = f.read(size)
+                if not data:
+                    break
+                crc = Util.get_crc_string(data, crc)
+
+        return str(hex(crc)).upper()[2:]
+
+    @staticmethod
+    def get_crc_string(s, crc=None):
+        if isinstance(s, str):
+            s = bytes(s, 'utf-8')
+        return crc32(s, crc) if crc else crc32(s, crc32(b''))
