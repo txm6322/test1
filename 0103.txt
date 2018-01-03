@@ -1,0 +1,41 @@
+https://stackoverflow.com/questions/44845476/form-submit-results-to-load-in-div
+
+
+   <form id="form1" name="form1" method="post" action="process.php">
+      <label>datum:</label>
+      <input name="datum" id="datum" size="10" type="text" autocomplete="off" /><br><br>
+       <label>club:</label>
+       <select name="clubid" id="club-list"  onChange="gettrainer(this.value);">
+       <option value="">Selecteer club</option>
+       <?php
+       foreach($results as $club) {
+        ?>
+       <option value="<?php echo $club["id"]; ?>"><?php echo $club["clubnaam"]; ?   ></option>
+       <?php
+      }
+      ?> 
+<input type="submit" id="submit" name="toevoegen" value="training toevoegen" />
+</form>
+
+
+
+
+<script>
+      $( document ).ready(function() {  
+
+        $('#form1').on('submit', function (e) {
+
+          e.preventDefault();
+          $.ajax({
+            type: 'POST',
+            url: 'process.php',
+            data: $('#form1').serialize(),
+              success: function (response) {
+             $("#main").html(response);
+            }
+          });
+
+        });
+
+      });
+    </script>
