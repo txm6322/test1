@@ -2,21 +2,48 @@
 public CompletableFuture<String> toCompletableFuture()
 public CompletionStage<String> exceptionally(Function<Throwable, ? extends String> fn)
 
-public <U> CompletionStage<U> thenApply(Function<? super String, ? extends U> fn)
-public CompletionStage<Void> thenAccept(Consumer<? super String> action)
-public CompletionStage<Void> thenRun(Runnable action)
-
+public <U> CompletionStage<U> thenApply(Function<? super String, ? extends U> fn) // String or up input, return U's sub
 public <U> CompletionStage<U> applyToEither( CompletionStage<? extends String> other, Function<? super String, U> fn)
-public CompletionStage<Void> acceptEither(   CompletionStage<? extends String> other, Consumer<? super String> action)
-
+   s->Integer.parse(s)
+       new Function<String, Double>(){
+ 	 @Override
+ 	  public Double apply(String t) {
+	    return Double.parseDouble(t);
+	  }}
+public CompletionStage<Void> acceptEither(CompletionStage<? extends String> other, Consumer<? super String> action)
+public CompletionStage<Void> thenAccept(Consumer<? super String> action)   // String--> no return
+  x->System.out.println(x)
+    new Consumer<String>() {
+      public void accept(String t) {
+         // ...
+      }}
 public <U> CompletionStage<Void> thenAcceptBoth(CompletionStage<? extends U> other, BiConsumer<? super String, ? super U> action)
+   (s,d)->System.out.println(s+d);
+   new BiConsumer<String, Double>(){
+     public void accept(String t, Double u) {
+         System.out.println(t+d);
+     }}
+
+public CompletionStage<Void> thenRun(Runnable action)      // no access ---> no return
+  ()->System.out.println("hello")
+  new Runnable() {
+    public void run() {
+      //
+  }}
+
+// when complete this or that normally
 public CompletionStage<Void> runAfterBoth(  CompletionStage<?> other, Runnable action)
 public CompletionStage<Void> runAfterEither(CompletionStage<?> other, Runnable action)
 
 public <U, V> CompletionStage<V> thenCombine(CompletionStage<? extends U> other, BiFunction<? super String, ? super U, ? extends V> fn)
-public <U> CompletionStage<U>    thenCompose(Function<? super String, ? extends CompletionStage<U>> fn)
+public <U> CompletionStage<U> thenCompose(Function<? super String, ? extends CompletionStage<U>> fn)
 public <U> CompletionStage<U> handle(BiFunction<? super String, Throwable, ? extends U> fn)
 public CompletionStage<String> whenComplete(BiConsumer<? super String, ? super Throwable> action)
+
+public CompletableFuture<String> toCompletableFuture()
+public CompletionStage<String> exceptionally(Function<Throwable, ? extends String> fn)
+
+
 
 -- Async version
 public <U, V> CompletionStage<V> thenCombineAsync(CompletionStage<? extends U> other, BiFunction<? super String, ? super U, ? extends V> fn)
