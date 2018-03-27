@@ -1,0 +1,49 @@
+20180327:
+public CompletableFuture<String> toCompletableFuture()
+public CompletionStage<String> exceptionally(Function<Throwable, ? extends String> fn)
+
+public <U> CompletionStage<U> thenApply(Function<? super String, ? extends U> fn)
+public CompletionStage<Void> thenAccept(Consumer<? super String> action)
+public CompletionStage<Void> thenRun(Runnable action)
+
+public <U> CompletionStage<U> applyToEither( CompletionStage<? extends String> other, Function<? super String, U> fn)
+public CompletionStage<Void> acceptEither(   CompletionStage<? extends String> other, Consumer<? super String> action)
+
+public <U> CompletionStage<Void> thenAcceptBoth(CompletionStage<? extends U> other, BiConsumer<? super String, ? super U> action)
+public CompletionStage<Void> runAfterBoth(  CompletionStage<?> other, Runnable action)
+public CompletionStage<Void> runAfterEither(CompletionStage<?> other, Runnable action)
+
+public <U, V> CompletionStage<V> thenCombine(CompletionStage<? extends U> other, BiFunction<? super String, ? super U, ? extends V> fn)
+public <U> CompletionStage<U>    thenCompose(Function<? super String, ? extends CompletionStage<U>> fn)
+public <U> CompletionStage<U> handle(BiFunction<? super String, Throwable, ? extends U> fn)
+public CompletionStage<String> whenComplete(BiConsumer<? super String, ? super Throwable> action)
+
+-- Async version
+public <U, V> CompletionStage<V> thenCombineAsync(CompletionStage<? extends U> other, BiFunction<? super String, ? super U, ? extends V> fn)
+public <U> CompletionStage<U> applyToEitherAsync(CompletionStage<? extends String> other, Function<? super String, U> fn)
+public <U> CompletionStage<U> handleAsync(BiFunction<? super String, Throwable, ? extends U> fn)
+public <U> CompletionStage<U> thenApplyAsync(Function<? super String, ? extends U> fn)
+public <U> CompletionStage<U> thenComposeAsync(Function<? super String, ? extends CompletionStage<U>> fn)
+public <U> CompletionStage<Void> thenAcceptBothAsync(CompletionStage<? extends U> other, BiConsumer<? super String, ? super U> action)
+public CompletionStage<String> whenCompleteAsync(BiConsumer<? super String, ? super Throwable> action)
+public CompletionStage<Void> acceptEitherAsync(CompletionStage<? extends String> other, Consumer<? super String> action)
+public CompletionStage<Void> runAfterBothAsync(CompletionStage<?> other, Runnable action)
+public CompletionStage<Void> runAfterEitherAsync(CompletionStage<?> other, Runnable action)
+public CompletionStage<Void> thenAcceptAsync(Consumer<? super String> action)
+public CompletionStage<Void> thenRunAsync(Runnable action)
+
+
+-- Async version with Executor
+public <U, V> CompletionStage<V> thenCombineAsync(CompletionStage<? extends U> other, BiFunction<? super String, ? super U, ? extends V> fn, Executor executor)
+public <U> CompletionStage<U> applyToEitherAsync(CompletionStage<? extends String> other, Function<? super String, U> fn, Executor executor)
+public <U> CompletionStage<U> handleAsync(BiFunction<? super String, Throwable, ? extends U> fn, Executor executor)
+public <U> CompletionStage<U> thenApplyAsync(Function<? super String, ? extends U> fn, Executor executor)
+public <U> CompletionStage<U> thenComposeAsync(Function<? super String, ? extends CompletionStage<U>> fn, Executor executor)
+public <U> CompletionStage<Void> thenAcceptBothAsync(CompletionStage<? extends U> other, BiConsumer<? super String, ? super U> action, Executor executor)
+public CompletionStage<String> whenCompleteAsync(BiConsumer<? super String, ? super Throwable> action, Executor executor)
+public CompletionStage<Void> acceptEitherAsync(CompletionStage<? extends String> other, Consumer<? super String> action, Executor executor)
+public CompletionStage<Void> runAfterBothAsync(CompletionStage<?> other, Runnable action, Executor executor)
+public CompletionStage<Void> runAfterEitherAsync(CompletionStage<?> other, Runnable action, Executor executor)
+public CompletionStage<Void> thenAcceptAsync(Consumer<? super String> action, Executor executor)
+public CompletionStage<Void> thenRunAsync(Runnable action, Executor executor)
+
