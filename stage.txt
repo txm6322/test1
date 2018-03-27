@@ -32,11 +32,97 @@ public CompletionStage<Void> thenRun(Runnable action)      // no access ---> no 
   }}
 
 // when complete this or that normally
-public CompletionStage<Void> runAfterBoth(  CompletionStage<?> other, Runnable action)
-public CompletionStage<Void> runAfterEither(CompletionStage<?> other, Runnable action)
+public CompletionStage<Void> runAfterBoth(CompletionStage<?> other, Runnable action)
+	public void testRunAfterBoth() {
+		log.info("start testRunAfterBoth");
+		CompletableFuture<String> cfs = CompletableFuture.supplyAsync(()->{log.info("start String supply");sleep(1000);return "a";});
+		CompletableFuture<Integer> cfi = CompletableFuture.supplyAsync(()->{log.info("start int supply");sleep(4000);return 3;});
+		log.info("cf created");
+		cfs.runAfterBoth(cfi, ()->{log.info("done");});
+		log.info("after run after both");
+		sleep(10000);
+	}
+14:50:55.340 (TestStream.java:31):_i start testRunAfterBoth
+14:50:55.341 (TestStream.java:32):_i start String supply
+14:50:55.342 (TestStream.java:34):_i cf created
+14:50:55.342 (TestStream.java:33):_i start int supply
+14:50:55.343 (TestStream.java:36):_i after run after both
+14:50:56.341 (TestStream.java:25):_i sleep return:1000
+14:50:59.344 (TestStream.java:25):_i sleep return:4000
+14:50:59.346 (TestStream.java:35):_i done           <!----  int is ready
+14:51:05.344 (TestStream.java:25):_i sleep return:10000
 
+
+public CompletionStage<Void> runAfterEither(CompletionStage<?> other, Runnable action) //  no passed in, no return
+	public void testRunAfterEither() {
+		log.info("start testRunAfterEither");
+		CompletableFuture<String> cfs = CompletableFuture.supplyAsync(()->{log.info("start String supply");sleep(1000);return "a";});
+		CompletableFuture<Integer> cfi = CompletableFuture.supplyAsync(()->{log.info("start int supply");sleep(4000);return 3;});
+		log.info("cf created");
+		cfs.runAfterEither(cfi, ()->{log.info("done");});
+		log.info("after run after either");
+		sleep(10000);
+	}
+14:50:45.320 (TestStream.java:45):_i start testRunAfterEither
+14:50:45.328 (TestStream.java:46):_i start String supply
+14:50:45.328 (TestStream.java:48):_i cf created
+14:50:45.328 (TestStream.java:47):_i start int supply
+14:50:45.329 (TestStream.java:50):_i after run after either
+14:50:46.328 (TestStream.java:25):_i sleep return:1000
+14:50:46.328 (TestStream.java:49):_i done            <!----  int not ready yet
+14:50:49.330 (TestStream.java:25):_i sleep return:4000
+14:50:55.331 (TestStream.java:25):_i sleep return:10000
+
+
+// passed in both, with return.  two indepent futures, then combine together
 public <U, V> CompletionStage<V> thenCombine(CompletionStage<? extends U> other, BiFunction<? super String, ? super U, ? extends V> fn)
+	public void testThenCombine() {
+		log.info("start testThenCombine");
+		CompletableFuture<String> cfs = CompletableFuture.supplyAsync(()->{log.info("start String supply");sleep(1000);return "a";});
+		CompletableFuture<Integer> cfi = CompletableFuture.supplyAsync(()->{log.info("start int supply");sleep(2000);return 3;});
+		log.info("cf created");
+		CompletableFuture<Double> cfn = cfs.thenCombine(cfi,
+				(s,i)->new Double(32)
+//		  new BiFunction<String,Integer,Double>() {
+//			public Double apply(String t, Integer u) {
+//				return new Double(32);
+//			}
+//		}
+      );
+		try {log.info("after thenCombine:"+cfn.get());} catch (InterruptedException | ExecutionException e) {}
+		sleep(10000);
+	}
+15:05:51.199 (TestStream.java:58):_i start testThenCombine
+15:05:51.208 (TestStream.java:61):_i cf created
+15:05:51.208 (TestStream.java:59):_i start String supply
+15:05:51.208 (TestStream.java:60):_i start int supply
+15:05:52.209 (TestStream.java:27):_i sleep return:1000
+15:05:53.209 (TestStream.java:27):_i sleep return:2000
+15:05:53.209 (TestStream.java:67):_i after thenCombine:32.0
+15:06:03.211 (TestStream.java:27):_i sleep return:10000
+
+// two futures, chained sequentially
 public <U> CompletionStage<U> thenCompose(Function<? super String, ? extends CompletionStage<U>> fn)
+	public void testThenCompose() {
+		log.info("start testThenCompose");
+		CompletableFuture<Integer> cfi = CompletableFuture.supplyAsync(()->{log.info("start int supply");sleep(1000);return 3;});
+		log.info("cf created");
+		CompletableFuture<Double> cfn = cfi.thenCompose(
+				x -> CompletableFuture.supplyAsync(() -> {log.info("start double supply");sleep(1000);return new Double(x+1000);})
+		);
+		log.info("waiting thenCompose...");
+		try {log.info("after thenCompose:"+cfn.get());} catch (InterruptedException | ExecutionException e) {}
+		sleep(10000);
+	}
+15:23:13.960 (TestStream.java:77):_i start testThenCompose
+15:23:13.969 (TestStream.java:79):_i cf created
+15:23:13.969 (TestStream.java:78):_i start int supply
+15:23:13.970 (TestStream.java:83):_i waiting thenCompose...
+15:23:14.970 (TestStream.java:27):_i sleep return:1000
+15:23:14.972 (TestStream.java:81):_i start double supply
+15:23:15.973 (TestStream.java:27):_i sleep return:1000
+15:23:15.973 (TestStream.java:84):_i after thenCompose:1003.0
+
 public <U> CompletionStage<U> handle(BiFunction<? super String, Throwable, ? extends U> fn)
 public CompletionStage<String> whenComplete(BiConsumer<? super String, ? super Throwable> action)
 
