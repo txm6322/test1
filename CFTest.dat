@@ -1,0 +1,203 @@
+package com.tim.stream;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.Stream;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.junit.experimental.theories.DataPoints;
+import org.junit.experimental.theories.Theories;
+import org.junit.experimental.theories.Theory;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+
+@RunWith(Theories.class)
+public class CFTest {
+	static Logger log = Logger.getLogger(CFTest.class);
+	static {
+		log.setLevel(Level.INFO);
+	}
+	@DataPoints public static String[] r =new String[] {"valid","invalid",null};
+	@DataPoints public static int[] delay =new int[] {0,40,80};//,20,30};
+	
+	static int count = 0;
+	static boolean run_single_test = false;
+	@Test
+	@Disabled
+	public void whenComplete() {
+//		CompletableFuture<String> c = new CompletableFuture<>();
+//		c.complete("a");
+//		c.completeExceptionally(new RuntimeException("runtime111"));
+		int ch =1;
+		CompletableFuture<String> c = CompletableFuture.supplyAsync(
+				ch==0?()->"a":
+					  ()->{throw new RuntimeException("runtime111");});
+		CompletableFuture<String> x = c.whenComplete((r,ex)->{
+			System.out.println("stage 1 result:"+r+"::::"+ex);
+		}).exceptionally(ex->{System.out.println("stage 2:"+ex.getCause()); return "finished exception";});
+
+		try {
+			System.out.println("x:"+x.get());
+		} catch (Exception e) {
+			System.out.println("eeeex:"+e);
+		} 
+		System.out.println("end");
+	}
+	
+	@Test
+//	@Disabled
+	public void singleTest() {
+		if(!run_single_test) return;
+		log.setLevel(Level.DEBUG);
+		testCFChaining(null,"valid","valid", 0,80,40);
+//		testCFChaining(null,"valid","valid", 1000,0,0);
+//		testCFChaining("invalid","valid","valid", 1000,0,0);
+//		testCFChaining("valid","valid","valid", 1000,2000,4000);
+	}
+	@Theory
+	public void testVoid(String s) {
+		if(!run_single_test) return;
+//		CompletableFuture<String> c = CompletableFuture.supplyAsync(()->"x");
+//		c.thenApply(x->(char)1)  // function return CF<Character>
+//		 .thenCompose(x->CompletableFuture.supplyAsync(()->"x")) // CF<int>
+//		 .thenAccept(System.out::println) // accept consumer. return  CF<Void>
+//		 .thenRun(()->System.out.println("complete")); // return runnable CF<Void>
+	}
+	
+	@Theory
+	public void testAllCombination(String ioi,String trade, String holding, int d1, int d2, int d3) {
+		if(run_single_test) return;
+//		if(ioi==null && d2>d1 && d3>d1) {
+			testCFChaining(ioi,trade,holding, d1,d2,d3);
+//		}
+	}
+
+	ConcurrentHashMap<String, Boolean> status= new ConcurrentHashMap<>(); // trade, holding cancelled?
+
+	public void testCFChaining(String vioi,String vtrade, String vholding, int d1, int d2, int d3) {
+		log.info(String.format(getThread()+"test:[%3d] ioi:[%s][%d] trade:[%s][%d] holding:[%s][%d]",
+				++count,vioi,d1,vtrade,d2,vholding,d3));
+		long ts0 = System.currentTimeMillis();
+		// getIOI->getTrade, getPortfolio --> apply rating and publish
+		ConcurrentHashMap.newKeySet();
+		Set<String> result = ConcurrentHashMap.newKeySet();
+		CompletableFuture<String> trade  = createSupplier("trade",d2, vtrade).handle((r,ex)->{
+					if(ex!=null) {
+						result.add("trade exception");
+						log.debug(ex.getCause().getMessage()+". but will continue");
+						return "no trade with exception";
+					}
+					return r;
+				});
+		
+		CompletableFuture<String> holding = createSupplier("holding",d3, vholding).handle((r,ex)->{
+				if(ex!=null) {
+					result.add("holding exception");
+					log.debug(ex.getCause().getMessage()+". but will continue");
+					return "no holding with exception";
+				}
+				return r;
+			});
+
+		CompletableFuture<String> ioi = createSupplier("ioi",d1, vioi)
+			.handle((s,ex)->{  // if there's no ioi or throws Exception, abort all				
+				if(!"valid".equals(s) || ex!=null) {
+//					log.debug("s:"+s+" ex:"+ex,ex);
+					result.add(ex!=null?"ioi exception":"invalid ioi");
+					if(!trade.isDone()) {
+						status.put("trade", trade.cancel(false));
+						result.add("cancelled trade");
+					}
+					if(!holding.isDone()) {
+						status.put("holding", holding.cancel(false));
+						result.add("cancelled holding");
+					}
+					log.info(getThread()+String.format("   cancel trade[%s] holding[%s] query success:",status.get("trade"), status.get("holding")));
+					throw new RuntimeException("no ioi data");
+				}
+				return s;
+			});
+
+		CompletableFuture<String> all = CompletableFuture.allOf(
+				ioi,trade,holding).handleAsync((Void, ex)->{
+					if(ex != null) {
+						log.warn(getThread()+"all handle: "+ex.getMessage());
+						log.info(getThread()+"no further processing");
+						result.add("aborted");
+						return "aborted";
+					}
+					
+					try {
+						String[] v = new String[] {ioi.get(),trade.get(),holding.get()};
+						String tmp= String.format("normal ioi[%s] trade[%s] holding[%s]",v[0],v[1],v[2]);
+						log.debug("results:"+tmp);
+						result.add(tmp);
+						return tmp;
+					} catch (Exception e) {
+						if(e.getCause().getMessage().startsWith("ioi"))
+							log.warn(e.getCause().getMessage());
+						else
+							log.warn(e);
+					}
+					return "should not happen";
+				});
+		long runtime =0;
+		try {
+			log.info(getThread()+"final:"+all.get());
+			runtime=System.currentTimeMillis()-ts0;
+			log.info(getThread()+"ts:"+runtime);
+		} catch (Exception e) {
+			result.add("should not happen:"+e.getMessage());
+			log.warn(e);
+		}
+		boolean should_finish = "valid".equals(vioi);
+		if(should_finish) {
+			String expected= String.format("normal ioi[%s] trade[%s] holding[%s]",vioi,
+					vtrade==null?"no trade with exception":vtrade,
+					vholding==null?"no holding with exception":vholding);
+			assertFalse(result.contains("aborted"),"with ioi, should finish");
+			assertTrue(result.contains(expected), "with ioi, should finish with normal...");
+			assertEquals("not found", result.stream().filter(x->x.startsWith("cancelled")).findFirst().orElse("not found"),
+					"should not cancel trade or holding");
+			assertTrue(runtime>=Math.max(Math.max(d1, d2),d3),"should wait for all to finish");
+		}else{
+			if(!trade.isDone())
+				assertTrue(result.contains("cancelled trade"),"should cancel long running trade/holding");
+//			if(d2>d1)
+//				assertTrue(result.contains("cancelled trade"),"trade cancelled");
+//			if(d3>d1)
+//				assertTrue(result.contains("cancelled holding"),"holding cancelled");
+	
+			assertTrue(result.contains("aborted"),"no ioi, should abort");
+			assertEquals("not found", result.stream().filter(x->x.startsWith("normal")).findFirst().orElse("not found"),
+					"should not complete normally");
+			// time might not be accurate
+//			assertTrue(runtime-d1<40,"should finish on ioi, should cancel long running trade/holding");
+			
+		}
+	}
+	
+	CompletableFuture<String> createSupplier(String name, long mili, String result){
+		return CompletableFuture.supplyAsync(()->{				
+			log.debug(getThread()+"generating "+name+" ...");
+			if(mili>0)
+				try {Thread.sleep(mili);}catch(Exception e) {}
+			if(!status.containsKey(name) || !status.get(name))
+				log.debug(getThread()+"produced "+name+":["+result+"]");
+			if(result == null)
+				throw new RuntimeException(name+" supplier exception");
+			return result;
+		});
+	}
+	
+	String getThread() {
+		return "["+Stream.of(Thread.currentThread().getName())
+		.map(s->s.startsWith("Fork")?s.replaceAll("^.*Pool-",""):s)
+		.findFirst().get()+"]:";
+	}
+}
+
