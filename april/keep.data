@@ -1,0 +1,76 @@
+	
+	public void test() {
+		log.setLevel(Level.INFO);
+		List<String> data = Arrays.asList("75959000,101012011,101012011,101012012,101012011,101011211,101012000,75959000,75959001,101010342,101012000".split(","));
+		List<Long> datai = data.stream().map(s-> 20180328000000000l+Long.parseLong(s)).collect(Collectors.toList());
+		Collections.shuffle(datai);
+		datai.stream().forEach(s->{
+			log.info("processing "+s);
+			addData(s,""+s);
+		});
+		addData(null,null);
+		Stream.of(limit).forEach(log::info);
+		log.info("status:");
+		status.stream().sorted().forEach(log::info);
+		
+	}
+	// [earliest ts persisted_no_milli, latested ts persisted_no_milli, required low_ts_with_milli]
+	// yyyyMMddHHmmss
+	static Long[] limit=new Long[] {Long.MAX_VALUE, 0l,  20180328075959000l};
+	//yyyyMMddTHH:mmss,  ..SSS,   data
+	static List<Object[]> candidate = new ArrayList<>();
+	static List<String> status = new ArrayList<>();
+
+	public String addData(Long date_with_milli, String data) {
+		if(date_with_milli == null) { // force persist
+			if("force".equals(data)) {  // force persist exist
+				if(candidate.size()>0)
+					log.debug("force persist");
+				candidate.forEach(s->{
+					persist(s[0], s[1], s[2]);
+				});
+			}
+			else {  // no new data, only persist records ending 000, if any
+				candidate.forEach(s->{
+					if((""+s[1]).endsWith("000")) {
+						persist(s[0], s[1], s[2]);
+					}else {
+						status.add(s[1]+" ignore for next run");
+						log.debug("ignore:"+s[1]);
+					}
+				});
+			}
+			candidate.clear();
+			return "";
+		}
+		
+		long date_no_milli = date_with_milli/1000;
+		if(limit[2] != null)
+			if(date_with_milli <= limit[2]) {
+				status.add(date_with_milli+" ignore");
+				return "old ignore:"+data;
+			}
+		if(candidate.isEmpty()) {
+			candidate.add(new Object[] {date_no_milli, date_with_milli, data});
+			log.debug("add "+date_with_milli+" size:"+candidate.size());
+			return "";
+		}
+		Long diff = date_no_milli - ((Long)candidate.get(0)[0]);
+		if(diff>=0) {
+			if(diff>0)  // publish existing and add this in
+				addData(null,"force"); // force publish earlier
+			candidate.add(new Object[] {date_no_milli, date_with_milli, data});
+			log.debug("add "+date_with_milli+" size:"+candidate.size());
+			return "";
+		}else
+			persist(date_no_milli, date_with_milli, data);
+			
+		return "";
+	}
+	public void persist(Object date_no_milli, Object date_with_milli, Object data) {
+		long ts = (Long)date_no_milli;
+		limit[0] = Long.min(ts,limit[0]);
+		limit[1] = Long.max(ts,limit[1]);
+		log.debug(date_with_milli+" persist");
+		status.add(date_with_milli+" persist");
+	}
