@@ -1,0 +1,56 @@
+@FunctionalInterface
+  1. has to be an interface
+  2. exactly one abstract method(SAM: Single Abstract Method)
+  3. methods inherited from Object do not count
+
+https://www.youtube.com/watch?v=P0DgOyxB4MI
+
+1 interface Runnable { void run();}
+  ans: yes
+2 interface ActionListener extends EventListener{actionPerformed(ActionEvent e);}
+  ans: depends on EventListener, no method, yes
+3. interface stringer{ String toString();}
+  ans: not as toString() is defined in Object
+4. in Object:
+      public int hashCode();
+      public boolean equals(Object o);
+      protected Object clone();
+      protected void finalize();
+      public final void notify, notifyAll, wait, wait(timeout), wait(timeout, nanos)
+    final:ignored, cannot override
+    public non final: counted
+    protected: possiblely
+5. Fool1{ boolean equals(Object o)[}  Bar1 extends Foo1{int compare(String s1, String s2);}
+   ans: Foo1 not because equals in Obj. Bar1: yes
+6. Comparator<T>{boolean equals(Object obj); int compare(T o1, T o2);}
+   ans: yes, implicit member equals
+7. CloneableFoo{int m(); Object clone();}
+   ans: no. as clone() in Object is protected, 2 methods here
+8. MouseListener extends EventListener { mouse...(MouseEvent e); ..}
+   ans: not. there're 5 methods
+
+
+Java8 some standard functional interfaces:
+  Supplier<T>
+    ()->"..." + System.currentTimeMillis(), only when it's called..
+    log(Level.FINE, msgSupplier);  repeat 1_000_000, time  132 vs 36 
+                                   repeat 100_000_000: 10206 vs 64
+  Consumer<T>
+    s->System.out.println(s.toUpperCase());
+    list.stream().map(String::toUpperCase).forEach(System.out::println);
+  Predicate<T>
+    list.removeIf(s->s.contains("i"))
+  Function<T,R>  # String --> Integer
+     .map(s->s.length)
+  UnaryOperator<T>
+     # replaceAll to upper
+     list.replaceAll(s->s.toUpperCase())
+     list.replaceAll(String::toUpperCase)
+  BinaryOperator<T>
+     BinaryOperator<Integer> op = (a,b)=>a+b
+     static <T> BinaryOperator<T> minBy(Comparator<? super T> comparator)
+     BinaryOperator<Integer> bi = BinaryOperator.minBy(Comparator.reverseOrder());
+     bi.apply(2,3)
+     DoubleBinaryOperator d = (x,y) -> x*y;
+     System.out.println(d.applyAsDouble(0.23, 0.45));
+
