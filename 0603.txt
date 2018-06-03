@@ -1,0 +1,94 @@
+Collectors
+  averagingDouble/Int/Long(ToDouble/Int/LongFunction<? super T>mapper)
+  summingInt...
+static <T> Collector<T,?,DoubleSummaryStatistics>  summarizingDouble/Int/Long(ToInt
+
+collectingAndThen(Collector<T,A,R> downstream, Function<R,RR> finisher)
+
+static <T> Collector<T,?,Long>  counting()
+
+static <T,K> Collector<T,?,Map<K,List<T>>> 	groupingBy(Function<? super T,? extends K> classifier)
+static <T,K,A,D> Collector<T,?,Map<K,D>> 	groupingBy(Function<? super T,? extends K> classifier, Collector<? super T,A,D> downstream)
+
+static <T,K,D,A,M extends Map<K,D>>
+Collector<T,?,M> 	groupingBy(Function<? super T,? extends K> classifier, Supplier<M> mapFactory, Collector<? super T,A,D> downstream)
+Returns a Collector implementing a cascaded 
+
+
+static <T,K,A,D> Collector<T,?,ConcurrentMap<K,D>> 	groupingByConcurrent(Function<? super T,? extends K> classifier, Collector<? super T,A,D> downstream)
+Returns a concurrent Coll
+
+joining([[deliimiter[, prefix,suffix])
+static <T,U,A,R> Collector<T,?,R> 	mapping(Function<? super T,? extends U> mapper, Collector<? super U,A,R> downstream)
+
+static <T> Collector<T,?,Optional<T>> 	min/maxBy(Comparator<? super T> comparator)
+
+
+static <T,D,A> Collector<T,?,Map<Boolean,D>> 	partitioningBy(Predicate<? super T> predicate, Collector<? super T,A,D> downstream)
+Re
+
+static <T,U> Collector<T,?,U> 	reducing(U identity, Function<? super T,? extends U> mapper, BinaryOperator<U> op)
+R
+
+static <T,C extends Collection<T>>
+Collector<T,?,C> 	toCollection(Supplier<C> collectionFactory)
+R
+
+toConcurrentMap(Function<? super T,? extends K> keyMapper, Function<? super T,? extends U> valueMapper, BinaryOperator<U> mergeFunction, Supplier<M> mapSummlier)
+
+toList()
+toMap(...)
+toSet()
+
+1. git pull origin master
+
+2. git checkout branch_to_be_rebased
+3. git rebase master   or
+   git rebase base_branch
+
+or git rebase master branch_to_be_rebased
+
+4. git push --force origin branch_to_be_rebased
+
+
+1. saved all your changes on branch1
+2. rebase all your changes on
+    git pull --rebase
+
+
+If there's conflict:
+  git checkout master
+  git merge your_branch
+
+master:  local branch
+origin/master: remote branch(a local copy of "master" on the remote named "origin")
+
+remote branch:
+  origin is a remote
+
+# fetch master from the remote origin. THe master branch on origin will be
+# fetched and the local copy will be named "origin/master"
+fit fetch origin master
+
+# merge origin/master into master
+git merge origin/master
+
+# push new changes in master back to origin
+git push origin master
+
+
+git pull = git fetch + git merge
+git fetch: only update branches under refs/remotes/<remote>/. no change
+           on work copy
+
+git --track dev origin/dev
+git --set-upstream-to origin/dev  (on dev checkout)
+
+
+# pull one branch
+git checkout master  # stay in other branch
+git pull origin feature/feature1
+
+
+git clone --single-branch --depth 1 -b <branch> <url> <dir>
+
