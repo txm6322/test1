@@ -1,0 +1,57 @@
+https://loginportal8.wanderingwifi.com/Portals/Default.aspx?clientip=10.1.0.200&clientmac=A4-02-B9-D2-A8-8E&wapip=96.65.4.129&nasid=DaysInnPrinceNorthAW1NAS&loginURL=http%3A%2F%2Fportals.wanderingwifi.com%3A8080%2Fgoform%2FHtmlLoginRequest
+
+
+pytest:
+  pytest -q test_sysexit.py  # no detail
+  python -m pytest
+  rule: 
+     https://docs.pytest.org/en/latest/goodpractices.html#test-discovery
+     1. if testpaths=?  or in current and sub
+     2. if command line, can have combo of dirs, filenames or node ids.
+       test_*.py or *_test.py
+     3. from those files, collect items:
+            test_* outside of class
+            test_* inside of Test* class(without an __init__)
+
+import pytest
+def f():
+    raise SystemExit(1)
+def g():
+    raise ValueError('Exception 123 raised')
+def test_a():
+    with pytest.raises(SystemExit):
+        f()
+class TestClass(object):
+   def test_1(self):
+       x = "this"
+       assert 'h' in x
+       assert hasattr(x, 'check')
+       assert f() == 4
+       assert f() == 4, 'value was odd, should be 4'
+   def test_recursion_depth():
+       with pytest.raises(ValueError, func, *args, **kwargs)
+       with pytest.raises(ValueError, match=r'.* 123'):
+          g()
+       with pytest.raises(RuntimeError) as excinfo:
+           def f():
+               f()
+           f()
+       assert 'maximum recursion' in str(excinfo.value)
+   @pytest.mark.xfail(raises=IndexError)
+   def test_f():
+       f()
+
+@pytest.fixture
+def smtp_c():
+   import smtplib
+   return smtplib.SMTP('smpt.gmail..)
+
+def test_ehlo(smtp_c):
+    response, msg = smtp_c.ehlo()
+    assert response == 250
+  
+    
+
+
+
+
