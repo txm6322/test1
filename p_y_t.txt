@@ -50,8 +50,13 @@ def test_ehlo(smtp_c):
     response, msg = smtp_c.ehlo()
     assert response == 250
   
+1.  Robert's rats tasks to move to Jenkins/dt-fi-ratings
+2. rats updates:
+       get the file-how, ftp to a folder?
+       parse the file and get mappings
+       for existing record-update it?
+       update the related records
+       send report to someone?
+       breg to turn on/off
+       fi* table, add new field?
     
-
-
-
-
