@@ -1,0 +1,9 @@
+. lib is not needed. use LIBRARY Load Path, and plink output
+2. When undefined symbol is found, usually it's header and lib version mismatch
+3. use -Wl,--verbose to find out which library is found successfully.
+4. need to update the headers using 
+    cd robo_big_trunk/opt/bb/include
+    dst=~tma91/mbig/refroot/refroot/opt/bb/include
+    cp bsl_* $dst
+    cp -fr gtest $dst
+
