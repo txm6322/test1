@@ -1,0 +1,18 @@
+
+def test_breg():
+    def side(v, d=defaultdict(int)):
+        data = {3: [333, 444],
+                5: [555, 666]}
+        d[v] += 1
+        if v in data:
+            return data[v][d[v]-1]
+        raise Exception("unexpected breg:%d" % v)
+    print('test breg')
+    with patch("source.breg", MagicMock(side_effect=side)) as mock1:
+        print(source.breg(3))
+        print(source.breg(5))
+        print(source.breg(3))
+        # print(source.breg(3))
+        print(mock1.mock_calls)
+    with patch.object(source, 'breg', return_value=123):
+        print(source.breg(2))
