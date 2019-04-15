@@ -1,0 +1,130 @@
+from unittest import mock
+m,n = mock.Mock(), mock.Mock()
+assert isinstance(m.abc, mock.Mock)
+
+m.foo = 'mock1'  # assign directly
+m.configure_mock(foo1='mock2') # use configure_mock
+
+assert m.foo == 'mock1' and m.foo1 == 'mock2'
+
+m.return_value='mock3'
+assert m() == 'mock3'
+
+m.side_effect=['mock4','mock5']
+assert m() == 'mock4'
+assert m() == 'mock5'
+try:
+   m()
+except StopIteration:
+   assert True
+else:
+   assert False
+
+n.side_effect = RuntimeError('a')
+try:
+   n()
+except RuntimeError:
+   assert True
+else:
+   assert False
+m.assert_called()
+m.assert_called_once()
+
+
+###################################
+import os
+def work_on():
+    path = os.getcwd()
+    print(f'working on {path}')
+    return path
+###################################
+
+from unittest import TestCase, mock
+from work import work_on
+
+class TestMOckingModule(TestCase):
+   def test_using_context_manager(self):
+       with mock.patch('work.os') as mocked_os:
+          work_on()
+          mocked_os.getcwd.assert_called_once()
+
+   @mock.patch('work.os')
+   def test_using_decorator(self, mocked_os):
+       work_on()
+       mocked_os.getcwd.assert_called_once()
+
+   def test_using_return_value(self):
+       with mock.patch('work.os.getcwd', return_value='testing'):
+           assert work_on() == 'testing'
+
+
+
+with patch('m.f',MagicMock(return_value=)):
+  m.f()
+
+with patch.object(m, 'f',MagicMock(return_value=)):
+  m.f()
+with patch.object(m, 'f',autospec=True) as o:
+  o.return_value=6
+  m.f()
+with patch.object(m, 'f',autospec=True):
+  m.f() # exception
+
+
+
+
+
+
+1. no table, create table
+
+2. with table, insert data
+
+3. with data, insert same key fail
+
+4. can update
+
+
+ :set guifont=Consolas:h10
+:set background=dark
+
+spec if spec_set is not None: use spec_set
+spec_set
+wraps
+name
+parent
+_spec_stat
+_new_name=''
+_new_parent
+_spec_as_instance=False,
+_eat_self if None: parent is not None
+unsafe=False, **kwargs
+
+CallableMixin
+  spec, side_effect,return_value=DEFAULT
+  wrap, name,
+
+
+
+assert_called_with  # most recent one
+assert_called_once_with  # most recent with
+assert_has_calls(calls, any_order=False)
+assert_any_call(arg)  # ever called
+
+assert_not_called()
+assert_called() # at least once
+assert_called_once()  # only once
+
+mock.call_count==1
+
+class TestA(unittest.TestCase):
+    @mock.patch(self, 'a.b', autospec=True)
+    def test_a(mock_a_b):
+        mock_a_b.ass...
+   # module_name + class_name + method_name
+
+@mock.patch('os.listdir', mock.MagicMock(return_value='test2'))
+@mock.patch('os.listdir')
+def test..(mock1, mock2):
+   mock1.return_value = 'test1'
+
+http://www.drdobbs.com/architecture-and-design/patching-mocks-in-python/240168924?pgno=2
