@@ -1,0 +1,82 @@
+Mock
+MagicMock: super set of Mock
+  1. Not Mock because it preconfigures all these protocol methods by
+     creating new Mocks and setting them, can go into endless loop.
+  2. if you want to acessing your mock as a container object to be an error.
+     MagicMock creates for you. - more difficult to do that.
+     MagicMock preconfigured return value might not be appropriate.
+
+https://docs.python.org/3/library/unittest.mock.html#unittest.mock.MagicMock
+
+Mock          Magic
+need to define magic methods
+              predefined.
+
+m = MagicMock()
+int(m) == 1
+len(m) == 0
+list(m) == []
+m.__eq__.return_value = True
+m.__eq__.side_effect = [True, False, True]
+m.__iter__.return_value = [1,2]
+list(m) == [1,2]
+list(m) == [1,2]
+m.__iter__.return_value = iter([1,2])
+list(m) == [1,2]
+list(m) == []
+m == 3
+
+
+In [20]: dir(m)
+Out[20]:
+['assert_any_call',
+ 'assert_called',
+ 'assert_called_once',
+ 'assert_called_once_with',
+ 'assert_called_with',
+ 'assert_has_calls',
+ 'assert_not_called',
+ 'attach_mock',
+ 'call_args',
+ 'call_args_list',
+ 'call_count',
+ 'called',
+ 'configure_mock',
+ 'method_calls',
+ 'mock_add_spec',
+ 'mock_calls',
+ 'reset_mock',
+ 'return_value',
+ 'side_effect']
+
+mock logging, ...
+
+
+auto documentation
+extending boundary
+auto qa
+mimic a prod issue
+- Prove that the code works like I think
+Give exmaples to others to how 
+-safety net for future changes
+  when new business requirements
+
+use junit to publish test trend.
+
+Why not unittest- standard lib
+  assert (assertT,F, NoEq,Not, Is)
+
+Arrange,  Act,   Assert(Triple A)
+
+happy path
+str read as sterr
+
+conftest.  tempdir
+junit has test case trend
+
+
+python -m coverage xml --include=project1*
+https://martin-thoma.com/testing-python-code/
+
+Run c++ gtest/gmock in Clion
+mock builtin.open
