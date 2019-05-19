@@ -80,3 +80,7 @@ https://martin-thoma.com/testing-python-code/
 
 Run c++ gtest/gmock in Clion
 mock builtin.open
+
+# TensorFlow or Keras? Which one should I learn?
+
+https://medium.com/implodinggradients/tensorflow-or-keras-which-one-should-i-learn-5dd7fa3f9ca0
