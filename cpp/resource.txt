@@ -1,0 +1,36 @@
+20191016 Wed:
+  online tools:
+     https://wandbox.org(more c++/gcc version)
+     https://cppinsights.io (compile translation, template instantiation, c++ 98,..2a)
+     https://gcc.godbolt.org (Compiler Explorer, hex code, many versions)
+
+  https://github.com/AnthonyCalandra/modern-cpp-features
+  http://yosefk.com/c++fqa/index.html
+  https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md#es23-prefer-the--initializer-syntax
+.c is compiled as C
+.cpp is compiled as C++
+
+https://stackoverflow.com/questions/3789340/combining-c-and-c-how-does-ifdef-cplusplus-work
+#ifdef __cplusplus
+extern "C" {
+#endif
+  ...
+#ifdef __cplusplus
+}
+#endif
+extern "C" { extern "C" { ... } }  are nicely nested ==> extern "C" { ...}
+
+When compiler compiles cpp, __cplusplus is defined.
+so same header if included in .c is different from the one included in .cpp.
+
+
+extern "C"{}: tells the compiler to generate compatible/old/simple/easy C ABI
+for the interface functions if the compiler is C compiler not c++.
+  - no overloading, compiler treats inside functions with all differences.
+
+
+
+This impacts linkage
+C++ functions, when compiled, have their names mangled - this is what makes
+overloading possible. name is modified based on the types and # of parameters.
+ same functions with same name will have diff symbol names.
