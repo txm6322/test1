@@ -1,45 +1,28 @@
 
 Lambda:
  int count = 0;
- [&count](char c){
-   if(isupper(c))
-     count++;}
-sort(p_float, p_float+n, [](float a, float b){
-   return abs(a) < abs(b);}
+ [&count](char c){ if(isupper(c)) count++;}
+ sort(p_float, p_float+n, [](float a, float b){ return abs(a) < abs(b);}
 
-[capture][(parameter)][mutable][exception] [attribute]-> return-type]
-  { body }
+[capture] [(parameter)] [mutable] [exception] [attribute]-> return-type] { body }
 
 [] // empty capture: access no variable in the enclosing scope
-default capture mode:
- all available local(include this)
-[&]: variable is captured by reference
-[=]: variable is captured by value
+default capture mode: [=] or [&]
+  all available local(include this)
+  [&]: variable is captured by reference
+  [=]: variable is captured by value
 [this]: can use class member
 [=, &a, &b]: a,b captured by ref, others by value
 [&, a, b]: a, b captured by value, others by reference
 [a]: a is const, or use "[a] mutable" to modify a(actually modify the lambda itself)
 ----------------
 https://stackoverflow.com/questions/5501959/why-does-c11s-lambda-require-mutable-keyword-for-capture-by-value-by-defau
+
 int x = 10;
-auto lamb = [=]() mutable {return x++ + 5;}
+auto lamb = [=]() mutable {return x++ + 5;} // need to have "() mutable"
 x = 20; // this is not captured
 cout << lamb(); // print 15. captured=10, x inside=11
 cout << lamb(); // print 16. because the lambda as x as 11
-
-
-modify value:
-  int a = 0;
-  auto f2= [=] () mutable {return a++;};
-  // need to have "() mutable"
-example:
- int total = 0, factor=0;
- [&total, factor]  // total by reference, factor by value
- [factor, &total]
- [&, factor]
- [factor, &]
- [=, &total]
- [&total, =]
 
 
 
