@@ -1,0 +1,99 @@
+
+Lambda:
+ int count = 0;
+ [&count](char c){
+   if(isupper(c))
+     count++;}
+sort(p_float, p_float+n, [](float a, float b){
+   return abs(a) < abs(b);}
+
+[capture][(parameter)][mutable][exception] [attribute]-> return-type]
+  { body }
+
+[] // empty capture: access no variable in the enclosing scope
+default capture mode:
+ all available local(include this)
+[&]: variable is captured by reference
+[=]: variable is captured by value
+[this]: can use class member
+[=, &a, &b]: a,b captured by ref, others by value
+[&, a, b]: a, b captured by value, others by reference
+[a]: a is const, or use "[a] mutable" to modify a(actually modify the lambda itself)
+----------------
+https://stackoverflow.com/questions/5501959/why-does-c11s-lambda-require-mutable-keyword-for-capture-by-value-by-defau
+int x = 10;
+auto lamb = [=]() mutable {return x++ + 5;}
+x = 20; // this is not captured
+cout << lamb(); // print 15. captured=10, x inside=11
+cout << lamb(); // print 16. because the lambda as x as 11
+
+
+modify value:
+  int a = 0;
+  auto f2= [=] () mutable {return a++;};
+  // need to have "() mutable"
+example:
+ int total = 0, factor=0;
+ [&total, factor]  // total by reference, factor by value
+ [factor, &total]
+ [&, factor]
+ [factor, &]
+ [=, &total]
+ [&total, =]
+
+
+
+class A {
+public:
+   A():{}
+   A(string* res):d(res){}
+   // copy c'tor
+   A(A& obj) :d(new string(*obj.d)){}
+   // move c'tor
+   A(A&& o): d(o.d){o.d = nullptr;}
+   // copy assignment
+   A& operator=(A& o){if(&o != this){d = new string(*o.d);} return *this;}
+
+   // move assignment
+   A& operator=(A&& o){
+     if(&o != this){
+        if(d != nullptr)
+            delete d;
+        d = o.d;
+        o.d = nullptr;
+     }
+     return *this;
+   }
+
+   ~A(){if(d != nullptr) delete d;}
+private:
+   string* d = nullptr;
+};
+
+1. if there's no any c'tor, compile will provide defaults
+    
+
+
+     
+
+
+
+pass by reference
+ pro:
+   - strong non-null guarantee(no need to check)
+   - const ref. read only
+      (allowing the flixibility of calling a function
+          with a compile time constant value)
+   - save time for large object
+   - no object slicing problem
+   - runtime polymorphism can be achieved.
+
+ cons(regards to param passed by non-const ref)
+   - readbility: if the value can be modified
+       readNextValue(input_buf, &x) is more explicit than
+       readNextValue(input_buf, x) is more explicit than
+   - pass-by-ref makes the function note Pure.
+        Pure functions have the benefits of being highly parallelized, more testable and less prone to bugs
+   - lifetime guarantee is a big issue with ref(as well as pointers).
+        (specially dangerous when lambda and multi-threaded prog are involved)
+
