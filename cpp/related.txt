@@ -1,4 +1,62 @@
+https://github.com/AnthonyCalandra/modern-cpp-features#range-based-for-loops
+c++11 new language features
+  rvalue reference
+  move semantics
+  special member function for move semantic
+  variadic template
+  forwarding reference
+  initializer list
+  static assertion
+  auto
+  lambda expression
+  decltype
+  type alias 
+     template <typename T>
+     using Vec = std::vector<T>;
+     Vec<int> v;
+     using String = std::string;
+     String s {"foo"};
+  nullptr:
+     void foo(int); void foo(char*);
+     foo(NULL); // ambiguous
+     foo(nullptr); // foo(char*)
+  strong-typed enum
+  attribute
+  constexpr
+  user-defined literal
+  delegating constructor
 
+  final specifier
+     class Foo final {...};
+     class Bar: Foo { ... }; // error, Foo is not allowed to be subclassed
+     struct A { virtual void Foo(); };
+     struct B: A { virtual void Foo() final; };
+     struct C: B { virtual void Foo(); }; // error: overrides a final function
+
+  default function
+  deleted function
+     class A {
+       public:
+         A() = default; // provide a default impl
+         A(const int) = delete; // no c'tor like this
+     };
+  range based loop
+     array<int, 3> h{1,2 3};
+     for(int x:h) ...
+
+  converting c'tor
+  explicit conversion function
+  inline-namespace
+  non-static data member initializer
+  right angle bracket
+  ref-qualified member function
+  trailing return type
+oo
+data type in C++:
+  built-in: bcd,fivw
+        bool, char, double, float, int, void, wide char
+  derived: array, function, pointer, reference
+  user defined: struct, union, enum, class
 
 class A {
 public:
