@@ -1,0 +1,157 @@
+================ interface to abstract implementation
+class MsgHandler {
+public:
+  MsgHandler();
+private:
+  PersistentStorage m_storage;
+};
+
+class PersistentStorage {
+public:
+  bool storeMsg(const Msg& msg);
+};
+
+class IPersistentStorage {
+public:
+  virtual ~IPersistenStorage();
+  virtual bool storeMsg(const Msg& msg) = 0;
+};
+
+class MsgHandler {
+  MsgHandler(shared_ptr<IPersistentStorage> storage);
+private:
+  shared_ptr<IPersistentStorage> m_storage;
+};
+  Fake: has impl but not work in prod(e.g. store in memory only)
+  Mock: pre-programmed expectation and return values
+
+
+================ extract and override call
+
+class Foo{
+   void process(){
+      if(...)
+         system("reboot");
+   }
+};
+
+class Foo{
+   virtual void reboot(){
+     system("reboot");
+   }
+   void process(){
+      if(...)
+         reboot();
+   }
+};
+
+class TestFoo: public Foo {
+public:
+  bool reboot_called;
+private:
+  virtual void reboot() override {reboot_called = true;}
+};
+  
+
+================ expose static method
+bool Foo::update(..){
+   if(bar(...))
+     ...
+}
+// change bar to static
+class Foo {
+protected:
+  static bool bar(...){..}
+};
+
+class TestFoo: public Foo {
+public:
+  using Foo::bar;
+}
+
+Test(Foo, barCase){
+  ASSERT_FALSE(TestFoo::bar(..));
+}
+
+class Base{
+public:
+  publicFoo();  // everyone
+protected:
+  protectedFoo(); // derived and friends
+private:
+  privateFoo(); // own and friend, not derived
+};
+class FooPub:public Base{
+// publicFoo() becomes public
+// protectedFoo() becomes private
+};
+class FooPub:protected Base{
+// publicFoo() and protectedFoo() become protected
+};
+class FooPub:private Base{
+// publicFoo() and protectedFoo() become private
+};
+           reference                     pointer
+           cannot be NULL                can be NULL
+           once init'ed,no change        change change
+           init'ed when it's created     anytime
+int a = 3, b=4;
+int &c=a;
+c = 5; // change a to 5
+c = b; // change a to 4;
+
+class A{
+public:
+    A(int&a):d_m(a){ // ref type must be init'ed in initialization list
+       d_m=a; // wrong: ref cannot be init'ed here
+    }
+    int&d_m;
+}; 
+
+struct Foo{
+    Foo():d_i(10){cout << "default c'tor" << endl;}
+    explicit Foo(int i):d_i(i){cout << "normal c'tor" << endl;}
+    Foo& operator=(const Foo& o){d_i = o.d_i; cout << "assignment op" << endl; return *this;}
+    ~Foo(){cout << "d'tor for " << d_i  << endl;}
+    int d_i;
+};
+    
+class A{
+public:
+    A(int&a):
+      d_m(a) // ref type must be init'ed in initialization list
+      ,k(10) // const type must be init'ed in initialization list
+      ,d_foo(5) // call normal c'tor initialization only
+    {
+      // d_m=a; // wrong: ref cannot be init'ed here
+      // k = 10; // wrong: const cannot be init'ed here
+      //  d_foo=5; // calls 1. default c'tor 2. normal c'tor for 5, 3. assign 5 to d_foo, 4. destruct
+    }
+    int&d_m;
+    const int k;
+    Foo d_foo;
+}; 
+
+int main(){
+    int a = 3;
+    int b = 4;
+    int&c = a;
+    cout << a << " " << b << endl;
+    c = 5;
+    c = b;
+    c = 10;
+     A d(c);
+    cout << a << " " << b << endl;
+    cout << d.d_m << endl;
+    c=20;
+    cout << d.d_m << endl;
+    // with explicit, only Foo a = Foo(10); works
+    // otherwise: Foo a = 5; Foo a(5); also work
+    cout << d.d_foo.d_i << endl;
+}
+
+
+
+double (*fn3(double a[][7][10]))[7][10] { return a;}
+double (*fn4(double (*a)[7][10]))[7][10] { return a;}
+
