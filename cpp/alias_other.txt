@@ -1,4 +1,5 @@
 ================ interface to abstract implementation
+
 class MsgHandler {
 public:
   MsgHandler();
