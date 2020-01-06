@@ -2,9 +2,29 @@ https://github.com/AnthonyCalandra/modern-cpp-features#range-based-for-loops
 c++11 new language features
   rvalue reference
   move semantics
+     mostly about performance opt.
+     move without the expensive overhead of copying
+     for plain old data, a move is the same as a copy
   special member function for move semantic
   variadic template
   forwarding reference
+      T& & --> T&
+      T& && --> T&
+      T&& & --> T&
+      T&& && --> T&&
+      int x = 0; // x is an lvalue of type int
+      auto&& al = x; // al is an lvalue of int&, binds to the lvalue x
+      auto&& ar = 0; // al is an lvalue of int&&, binds to the rvalue temp 0
+     void f(auto&& t){..} // since C++14 or later
+     template <typename T> void f(T&& t) {..} // since C++11 or later
+     int x = 0; int & y = x, int&& z = 0;
+     f(0); // f(int&&)
+     f(x); // f(int&);
+     f(y); // f(int& &&) ==> f(int &)
+     f(z); // f(int&& &) ==> f(int &)
+     f(std::move(z)); f(int&& &&) ==> f(int&&)
+    
+
   initializer list
   static assertion
   auto
@@ -33,7 +53,6 @@ c++11 new language features
      struct B: A { virtual void Foo() final; };
      struct C: B { virtual void Foo(); }; // error: overrides a final function
 
-  default function
   deleted function
      class A {
        public:
@@ -60,17 +79,16 @@ data type in C++:
 
 class A {
 public:
-   A():{}
+   A():{} // default c'tor
    A(string* res):d(res){}
-   // copy c'tor
-   A(A& obj) :d(new string(*obj.d)){}
-   // move c'tor
-   A(A&& o): d(o.d){o.d = nullptr;}
-   // copy assignment
-   A& operator=(A& o){if(&o != this){d = new string(*o.d);} return *this;}
 
-   // move assignment
-   A& operator=(A&& o){
+   A(const A& obj) :d(new string(*obj.d)){} // copy c'tor
+
+   A(A&& o): d(o.d) {o.d = nullptr;} // move c'tor
+
+   A& operator=(A& o) {if(&o != this){d = new string(*o.d);} return *this;} // copy assignment
+
+   A& operator=(A&& o){ // move assignment
      if(&o != this){
         if(d != nullptr)
             delete d;
@@ -84,10 +102,6 @@ public:
 private:
    string* d = nullptr;
 };
-
-1. if there's no any c'tor, compile will provide defaults
-    
-
 
 
 pass by reference

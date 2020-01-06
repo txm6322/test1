@@ -9,7 +9,7 @@ int k = a;
 enum {ER=0, E1} va1; // unnamed enum
 enum C: char {a1,b1}; // cannot define a
 enum E: short int {k1=0x01, k3=0x100};
-enum Days {Mon,Tue}; // unscoped. Mon, Tue is leaked/:defined in global scope, cannot be redefined
+enum Days {Mon,Tue}; // unscoped. Mon, Tue is leaked:defined in global scope, cannot be redefined
 Days day = Mon; // C++ way
 enum Days day1; // C way, requires enum
 
