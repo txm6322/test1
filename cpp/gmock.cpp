@@ -6,6 +6,16 @@ https://github.com/google/googletest/blob/master/googlemock/docs/for_dummies.md
 ========= Cookbook ==========
 https://github.com/google/googletest/blob/master/googlemock/docs/cook_book.md
 
+https://github.com/google/googletest/blob/master/googletest/docs/advanced.md
+
+ASSERT/ExPECT_THROW
+ASSERT/ExPECT_ANY_THROW
+ASSERT/ExPECT_NO_THROW
+
+ASSERT/EXPECT_PRED1(pred1, val1)  // pred1(val1) is true
+ASSERT/EXPECT_PRED2(pred2, v1, v2)  // pred2(v1, v2) is true
+ASSERT/EXPECT_PREDn(predn, v1, v2, .., vn)  // predn(v1, v2, ...) is true
+
 
 EXPECT_CALL(mock, foo(matcher))
   .Times(AnyNumber()) 
@@ -212,4 +222,19 @@ EXPECT_CALL(mock2, foo1());
 StrictMock<MockFoo> mock3; // subclass of MockFoo
 EXPECT_CALL(mock3, foo1());
             // uninterested calls failures
+
+
+EXPECT_*   - continue with the run if an assertion fails
+ASSERT_*   - abort the program execution if an assertion fails
+_TRUE(condition)
+_NE(val1, val2)
+_EQ(expected, f)
+_FLOAT_EQ
+_DOUBLE_EQ
+_NEAR(expected, actual, absolute_range)
+double f(){
+   exit(-1);
+}
+
+ASSERT_EXIT(f(), ::testing::ExitedWithCode(-1), "Error: Wrong Input")
 
